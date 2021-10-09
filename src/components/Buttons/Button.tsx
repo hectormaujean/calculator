@@ -1,8 +1,13 @@
 import { Button, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
+import { MouseEvent } from 'react';
 import { ButtonType } from '../../const/buttons';
 
-export function CalculatorButton({ label, color }: ButtonType) {
+type Props = ButtonType & {
+    handleClick: (e: MouseEvent<HTMLButtonElement>) => void;
+};
+
+export function CalculatorButton({ label, value, color, handleClick }: Props) {
     return (
         <Button
             variant="contained"
@@ -17,10 +22,12 @@ export function CalculatorButton({ label, color }: ButtonType) {
                 margin: 0.5,
                 borderRadius: 4,
                 padding: 0,
-                width: 50,
+                width: 65,
                 height: 50,
                 minWidth: 'unset',
             }}
+            onClick={handleClick}
+            value={value ?? label}
         >
             <Typography fontSize="1.25rem">{label}</Typography>
         </Button>

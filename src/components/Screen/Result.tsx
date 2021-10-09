@@ -1,6 +1,10 @@
 import { Box } from '@mui/material';
 
-export function ScreenResult() {
+type Props = {
+    result: string;
+};
+
+export function ScreenResult({ result }: Props) {
     return (
         <Box
             sx={{
@@ -11,7 +15,7 @@ export function ScreenResult() {
                 textAlign: 'right',
             }}
         >
-            12,956
+            {result}
         </Box>
     );
 }

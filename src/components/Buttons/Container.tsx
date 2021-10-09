@@ -12,6 +12,9 @@ export function ButtonsContainer({ children }: Props) {
                 bgcolor: grey[100],
                 borderRadius: 4,
                 padding: 1,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
             }}
         >
             {children}
