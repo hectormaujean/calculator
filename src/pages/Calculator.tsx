@@ -1,11 +1,13 @@
-import { Box } from '@mui/material';
-
 import { MouseEvent, useEffect, useState } from 'react';
 import { evaluate, format } from 'mathjs';
+import { Box } from '@mui/material';
+
+import { isSymbolAction, isSymbolOperator } from '../modules/buttons/typeguards';
+import { buttons } from '../modules/buttons/const';
+
 import { ButtonsContainer } from '../components/Buttons/Container';
 import { ButtonsRow } from '../components/Buttons/Row';
 import { CalculatorButton } from '../components/Buttons/Button';
-import { buttons, isSymbolAction, isSymbolOperator } from '../const/buttons';
 import { ScreenResult } from '../components/Screen/Result';
 import { ScreenCurrentOperation } from '../components/Screen/CurrentOperation';
 

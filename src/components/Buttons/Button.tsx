@@ -1,7 +1,8 @@
+import { MouseEvent } from 'react';
 import { Button, Typography } from '@mui/material';
 import { grey } from '@mui/material/colors';
-import { MouseEvent } from 'react';
-import { ButtonType } from '../../const/buttons';
+
+import { ButtonType } from '../../modules/buttons/types';
 
 type Props = ButtonType & {
     handleClick: (e: MouseEvent<HTMLButtonElement>) => void;
