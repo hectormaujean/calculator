@@ -15,6 +15,7 @@ export function ButtonsContainer({ children }: Props) {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                height: '100%',
             }}
         >
             {children}

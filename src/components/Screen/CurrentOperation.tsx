@@ -15,7 +15,7 @@ export function ScreenCurrentOperation({ currentOperation }: Props) {
                 paddingBottom: 1,
                 marginBottom: -1,
                 textAlign: 'right',
-                overflow: 'scroll',
+                overflowX: 'scroll',
             }}
         >
             <Typography color={currentOperation ? grey[900] : grey[400]}>

@@ -5,5 +5,5 @@ type Props = {
 };
 
 export function ButtonsRow({ children }: Props) {
-    return <Box>{children}</Box>;
+    return <Box sx={{ width: '100%', height: '100%', display: 'flex' }}>{children}</Box>;
 }

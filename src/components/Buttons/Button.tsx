@@ -23,14 +23,13 @@ export function CalculatorButton({ label, value, color, handleClick }: Props) {
                 margin: 0.5,
                 borderRadius: 4,
                 padding: 0,
-                width: 65,
-                height: 50,
                 minWidth: 'unset',
+                flex: '1 1 0px',
             }}
             onClick={handleClick}
             value={value ?? label}
         >
-            <Typography fontSize="1.25rem">{label}</Typography>
+            <Typography fontSize="1.5rem">{label}</Typography>
         </Button>
     );
 }

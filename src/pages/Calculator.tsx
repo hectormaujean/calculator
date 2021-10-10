@@ -10,6 +10,7 @@ import { ButtonsRow } from '../components/Buttons/Row';
 import { CalculatorButton } from '../components/Buttons/Button';
 import { ScreenResult } from '../components/Screen/Result';
 import { ScreenCurrentOperation } from '../components/Screen/CurrentOperation';
+import { ScreenContainer } from '../components/Screen/Container';
 
 export function Calculator() {
     const [input, setInput] = useState<(string | number)[]>([]);
@@ -33,6 +34,9 @@ export function Calculator() {
                 const prevAmount = parseFloat(input[input.length - 1].toString());
                 setInput((prevInput) => prevInput.slice(0, -1).concat(prevAmount / 100));
             }
+            if (symbol === '=' && !isSymbolOperator(input[input.length - 1])) {
+                setResult(format(evaluate(input.join('')), { precision: 10 }));
+            }
         } else if (isSymbolOperator(symbol)) {
             if (!input.length) {
                 setInput([0, symbol]);
@@ -54,8 +58,8 @@ export function Calculator() {
     };
 
     useEffect(() => {
-        if (input.length && !isSymbolOperator(input[input.length - 1])) {
-            setResult(format(evaluate(input.join('')), { precision: 10 }));
+        if (input.length && isSymbolOperator(input[input.length - 1])) {
+            setResult(format(evaluate(input.slice(0, -1).join('')), { precision: 10 }));
         }
     }, [input]);
 
@@ -64,15 +68,17 @@ export function Calculator() {
             sx={{
                 bgcolor: 'white',
                 borderRadius: 4,
-                height: 568,
-                width: 320,
+                height: '100vh',
+                width: '100vw',
                 display: 'flex',
                 flexDirection: 'column',
                 justifyContent: 'end',
             }}
         >
-            <ScreenCurrentOperation currentOperation={input.join('')} />
-            <ScreenResult result={result} />
+            <ScreenContainer>
+                <ScreenCurrentOperation currentOperation={input.join('')} />
+                <ScreenResult result={result} />
+            </ScreenContainer>
             <ButtonsContainer>
                 {buttons.map((row) => (
                     <ButtonsRow key={row.reduce((res, button) => res + button.label.toString(), '')}>
