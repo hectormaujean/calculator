@@ -10,25 +10,50 @@ import { ScreenResult } from '../components/Screen/Result';
 import { ScreenCurrentOperation } from '../components/Screen/CurrentOperation';
 
 export function Calculator() {
-    const [input, setInput] = useState('');
+    const [input, setInput] = useState<(string | number)[]>([]);
     const [result, setResult] = useState('0');
 
     const addSymbolToInput = (e: MouseEvent<HTMLButtonElement>) => {
         const symbol = e.currentTarget.value;
         if (isSymbolAction(symbol)) {
-            // TODO
-        } else if (isSymbolOperator(symbol) && !input) {
-            setInput(0 + symbol);
-        } else if (isSymbolOperator(symbol) && isSymbolOperator(input[input.length - 1])) {
-            setInput((prevState) => prevState.slice(0, -1) + symbol);
+            if (symbol === 'AC') {
+                setInput([]);
+                setResult('0');
+            }
+            if (symbol === '±' && input.length && !isSymbolOperator(input[input.length - 1])) {
+                const prevAmount = parseFloat(input[input.length - 1].toString());
+                setInput((prevInput) => prevInput.slice(0, -1).concat(-prevAmount));
+            }
+            if (symbol === 'C') {
+                setInput((prevInput) => prevInput.slice(0, -1));
+            }
+            if (symbol === '%' && input.length && !isSymbolOperator(input[input.length - 1])) {
+                const prevAmount = parseFloat(input[input.length - 1].toString());
+                setInput((prevInput) => prevInput.slice(0, -1).concat(prevAmount / 100));
+            }
+        } else if (isSymbolOperator(symbol)) {
+            if (!input.length) {
+                setInput([0, symbol]);
+            } else if (isSymbolOperator(input[input.length - 1])) {
+                setInput((prevInput) => prevInput.slice(0, -1).concat(symbol));
+            } else {
+                setInput((prevInput) => prevInput.concat(symbol));
+            }
+        } else if (input.length) {
+            const prevAmount = input[input.length - 1];
+            if (!isSymbolOperator(prevAmount)) {
+                setInput((prevInput) => prevInput.slice(0, -1).concat(prevAmount + symbol.toString()));
+            } else {
+                setInput((prevInput) => prevInput.concat(symbol));
+            }
         } else {
-            setInput((prevState) => prevState + symbol);
+            setInput((prevInput) => prevInput.concat(symbol));
         }
     };
 
     useEffect(() => {
-        if (input && !isSymbolOperator(input[input.length - 1])) {
-            setResult(format(evaluate(input), { precision: 10 }));
+        if (input.length && !isSymbolOperator(input[input.length - 1])) {
+            setResult(format(evaluate(input.join('')), { precision: 10 }));
         }
     }, [input]);
 
@@ -44,7 +69,7 @@ export function Calculator() {
                 justifyContent: 'end',
             }}
         >
-            <ScreenCurrentOperation currentOperation={input} />
+            <ScreenCurrentOperation currentOperation={input.join('')} />
             <ScreenResult result={result} />
             <ButtonsContainer>
                 {buttons.map((row) => (
