@@ -1,16 +1,23 @@
+import { useContext } from 'react';
+
 import { Box } from '@mui/material';
-import { grey } from '@mui/material/colors';
+
+import { ThemeContext } from '../../modules/theme/context';
+import { theme } from '../../modules/theme/theme';
 
 type Props = {
     children: React.ReactNode;
 };
 
 export function ButtonsContainer({ children }: Props) {
+    const { themeMode } = useContext(ThemeContext);
+
     return (
         <Box
             sx={{
-                bgcolor: grey[100],
-                borderRadius: 4,
+                bgcolor: theme[themeMode].containerBgColor,
+                borderTopLeftRadius: 16,
+                borderTopRightRadius: 16,
                 padding: 1,
                 display: 'flex',
                 flexDirection: 'column',

@@ -1,9 +1,12 @@
-import { MouseEvent, useEffect, useState } from 'react';
+import { MouseEvent, useContext, useEffect, useState } from 'react';
+
 import { evaluate, format } from 'mathjs';
 import { Box } from '@mui/material';
 
+import { ThemeContext } from '../modules/theme/context';
 import { isSymbolAction, isSymbolOperator } from '../modules/buttons/typeguards';
 import { buttons } from '../modules/buttons/const';
+import { theme } from '../modules/theme/theme';
 
 import { ButtonsContainer } from '../components/Buttons/Container';
 import { ButtonsRow } from '../components/Buttons/Row';
@@ -11,8 +14,11 @@ import { CalculatorButton } from '../components/Buttons/Button';
 import { ScreenResult } from '../components/Screen/Result';
 import { ScreenCurrentOperation } from '../components/Screen/CurrentOperation';
 import { ScreenContainer } from '../components/Screen/Container';
+import { ScreenThemeModeToggle } from '../components/Screen/ThemeModeToggle';
 
 export function Calculator() {
+    const { themeMode } = useContext(ThemeContext);
+
     const [input, setInput] = useState<(string | number)[]>([]);
     const [result, setResult] = useState('0');
 
@@ -66,8 +72,7 @@ export function Calculator() {
     return (
         <Box
             sx={{
-                bgcolor: 'white',
-                borderRadius: 4,
+                bgcolor: theme[themeMode].bgColor,
                 height: '100vh',
                 width: '100vw',
                 display: 'flex',
@@ -76,6 +81,7 @@ export function Calculator() {
             }}
         >
             <ScreenContainer>
+                <ScreenThemeModeToggle />
                 <ScreenCurrentOperation currentOperation={input.join('')} />
                 <ScreenResult result={result} />
             </ScreenContainer>

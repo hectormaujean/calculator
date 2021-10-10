@@ -1,14 +1,18 @@
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import { ThemeProvider } from './modules/theme/context';
+
 import { Calculator } from './pages/Calculator';
 
 function App() {
     return (
-        <Router>
-            <Switch>
-                <Route path="/" component={Calculator} />
-            </Switch>
-        </Router>
+        <ThemeProvider>
+            <Router>
+                <Switch>
+                    <Route path="/" component={Calculator} />
+                </Switch>
+            </Router>
+        </ThemeProvider>
     );
 }
 

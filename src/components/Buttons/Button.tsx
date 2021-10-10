@@ -1,23 +1,27 @@
-import { MouseEvent } from 'react';
+import { MouseEvent, useContext } from 'react';
+
 import { Button, Typography } from '@mui/material';
-import { grey } from '@mui/material/colors';
 
 import { ButtonType } from '../../modules/buttons/types';
+import { ThemeContext } from '../../modules/theme/context';
+import { theme } from '../../modules/theme/theme';
 
 type Props = ButtonType & {
     handleClick: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 export function CalculatorButton({ label, value, color, handleClick }: Props) {
+    const { themeMode } = useContext(ThemeContext);
+
     return (
         <Button
             variant="contained"
             sx={{
-                color: color || grey[900],
-                bgcolor: grey[200],
+                color: color || theme[themeMode].color,
+                bgcolor: theme[themeMode].buttonBgColor,
                 boxShadow: 'none',
                 ':hover': {
-                    bgcolor: grey[300],
+                    bgcolor: theme[themeMode].buttonHoverBgColor,
                     boxShadow: 'none',
                 },
                 margin: 0.5,
